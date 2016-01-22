@@ -311,11 +311,11 @@ public class RNGMapsViewManager extends SimpleViewManager<MapView> {
                 ReadableMap markerJson = markerArray.getMap(i);
                 if(markerJson.hasKey("coordinates")) {
                     Marker marker = map.addMarker(createMarker(markerJson));
-
-                    if (markerJson.hasKey("id")) {
+                    ReadableMap markerCoordinatesJson = markerJson.getMap("coordinates");
+                    if (markerCoordinatesJson.hasKey("id")) {
                         // As we have to lookup it either way, switch it around
-                        markerLookup.put(marker.getId(), markerJson.getString("id"));
-                        markerLookup.put(markerJson.getString("id"), marker.getId().replace("m",""));
+                        markerLookup.put(marker.getId(), markerCoordinatesJson.getString("id"));
+                        markerLookup.put(markerCoordinatesJson.getString("id"), marker.getId().replace("m",""));
                     }
 
                     mapMarkers.add(marker);
